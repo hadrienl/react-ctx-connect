@@ -15,7 +15,7 @@ and avoid useless re-renders.
 import React from 'react';
 import connect from 'react-ctx-connect';
 
-export const context = React.createContext();
+export const context = React.createContext({ foo: 'Hello World' });
 
 export const connectContext = connect(context);
 ```
@@ -38,9 +38,9 @@ export default connectContext('foo')(Component);
 
 ## Advanced Usage
 
-There is three way to access context values :
+There is three ways to access context values :
 
-### list of strings
+### List of strings
 
 You can pass a list of props names as strings for an exact match between context
 values and component props.
@@ -89,7 +89,7 @@ connectContext(context => ({
 connectContext(({ some: { value: foo }}) => ({ foo }))(Component);
 ```
 
-In theses tywo examples, `Component` will have a `foo` prop with
+In theses two examples, `Component` will have a `foo` prop with
 `context.some.value` value.
 
 ## Tests
