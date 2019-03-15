@@ -70,12 +70,19 @@ export const connect = ({ Consumer }) => (...mapContextToPropsList) => WrappedCo
     }
 
     render () {
-      const { state, props: { props } } = this;
-      return <WrappedComponent {...state} {...props} />;
+      const { state, props: { props, forwardedRef } } = this;
+      return <WrappedComponent {...state} {...props} ref={forwardedRef} />;
     }
   }
 
-  return props => <Consumer>{value => <Connect context={value} props={props} />}</Consumer>;
+  function forwardRef (props, ref) {
+    return (
+      <Consumer>{value => <Connect context={value} props={props} forwardedRef={ref} />}</Consumer>
+    );
+  }
+  const name = WrappedComponent.displayName || WrappedComponent.name;
+  forwardRef.displayName = `connect()(${name})`;
+  return React.forwardRef(forwardRef);
 };
 
 export default connect;
